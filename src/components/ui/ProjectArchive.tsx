@@ -194,8 +194,8 @@ export const ProjectArchive: React.FC<ProjectArchiveProps> = ({ type, onClose })
                 <InteractiveBook
                     pages={generatePages()}
                     onClose={onClose}
-                    width={500}
-                    height={650}
+                    width={600}
+                    height={700}
                 />
 
                 {/* Helper UI */}
