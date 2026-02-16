@@ -145,7 +145,7 @@ export const ProjectArchive: React.FC<ProjectArchiveProps> = ({ type, onClose })
             pages.push(
                 <div key="about-1" className="flex flex-col h-full p-10 bg-[#FCFAF5] justify-center text-center">
                     <div className="w-24 h-24 bg-[#D1D1CB] rounded-full mx-auto mb-6 flex items-center justify-center border-4 border-white shadow-lg overflow-hidden">
-                        <img src="/girl.png" alt="Profile" className="w-full h-full object-cover" />
+                        <img src="/girls.png" alt="Profile" className="w-full h-full object-cover" />
                     </div>
                     <h2 className="text-3xl font-serif text-[#1A2A3A] mb-2 uppercase tracking-tight">Navya Sinha</h2>
                     <p className="text-[10px] text-[#C5A059] font-bold uppercase tracking-[0.4em]">Forever the girl who gets excited about learning new things</p>

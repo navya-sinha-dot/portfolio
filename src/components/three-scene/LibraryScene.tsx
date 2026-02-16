@@ -182,7 +182,7 @@ const StillLifeIntroduction: React.FC = () => {
                 <group position={[0, 1, 0.1]}>
                     <Image
                         ref={imageRef}
-                        url="/girl.png"
+                        url="/girls.png"
                         scale={[2.8, 3.8]}
                         transparent
                     />
