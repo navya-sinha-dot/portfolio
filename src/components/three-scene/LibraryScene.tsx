@@ -10,30 +10,65 @@ import { ProjectArchive } from '../ui/ProjectArchive';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-const Steam: React.FC<{ position: [number, number, number]; opacity: number }> = ({ position, opacity }) => {
+const Steam: React.FC<{ position: [number, number, number] }> = ({ position }) => {
     const group = React.useRef<THREE.Group>(null);
+    const scroll = useScroll();
+    const material = React.useMemo(() => new THREE.MeshBasicMaterial({
+        color: "#FFFFFF",
+        transparent: true,
+        opacity: 0,
+        depthWrite: false
+    }), []);
+
     useFrame((state) => {
         if (!group.current) return;
+
+        material.opacity = Math.max(0, 1 - scroll.offset * 2) * 0.6;
+
         group.current.children.forEach((child, i) => {
-            child.position.y += 0.01 + Math.sin(state.clock.elapsedTime + i) * 0.005;
-            if (child.position.y > 0.5) child.position.y = 0;
-            child.scale.setScalar(THREE.MathUtils.lerp(0.1, 0.3, child.position.y * 2));
+            child.position.y += 0.015 + Math.sin(state.clock.elapsedTime * 2 + i) * 0.005;
+            if (child.position.y > 0.7) {
+                child.position.y = 0;
+                child.position.x = (Math.random() - 0.5) * 0.2;
+            }
+            child.scale.setScalar(THREE.MathUtils.lerp(0.1, 0.5, child.position.y * 1.2));
         });
     });
 
     return (
         <group ref={group} position={position}>
-            {[...Array(5)].map((_, i) => (
-                <mesh key={i} position={[Math.random() * 0.2 - 0.1, Math.random() * 0.5, 0]}>
-                    <circleGeometry args={[0.1, 16]} />
-                    <meshBasicMaterial color="#FFFFFF" transparent opacity={opacity * 0.3} />
+            {[...Array(8)].map((_, i) => (
+                <mesh key={i} material={material} position={[(Math.random() - 0.5) * 0.2, Math.random() * 0.7, (Math.random() - 0.5) * 0.1]}>
+                    <sphereGeometry args={[0.08, 12, 12]} />
                 </mesh>
             ))}
         </group>
     );
 };
 
-const StillLifeIntroduction: React.FC<{ scrollOffset: number }> = ({ scrollOffset }) => {
+const StillLifeIntroduction: React.FC = () => {
+    const scroll = useScroll();
+    const frameMaterialRef = React.useRef<THREE.MeshStandardMaterial>(null);
+    const imageRef = React.useRef<any>(null);
+    const nameRef = React.useRef<HTMLHeadingElement>(null);
+    const lineRef = React.useRef<HTMLDivElement>(null);
+
+    useFrame(() => {
+        const offset = scroll.offset;
+        const opacity = Math.max(0, 1 - offset * 2.5);
+        const imageOpacity = Math.max(0, 1 - offset * 3);
+
+        if (frameMaterialRef.current) frameMaterialRef.current.opacity = opacity;
+        if (imageRef.current) imageRef.current.material.opacity = imageOpacity;
+        if (nameRef.current) {
+            nameRef.current.style.opacity = opacity.toString();
+            nameRef.current.style.transform = `translateY(${offset * -40}px)`;
+        }
+        if (lineRef.current) {
+            lineRef.current.style.opacity = opacity.toString();
+        }
+    });
+
     return (
         <group>
             {/* The Surface (Marble Table) - Shifted Left */}
@@ -50,10 +85,53 @@ const StillLifeIntroduction: React.FC<{ scrollOffset: number }> = ({ scrollOffse
                         <boxGeometry args={[3, 0.1, 2]} />
                         <meshStandardMaterial color="#D1D1CB" metalness={0.8} roughness={0.2} />
                     </mesh>
-                    <mesh position={[0, 1, -1]} rotation={[-Math.PI / 10, 0, 0]} castShadow>
-                        <boxGeometry args={[3, 2, 0.08]} />
-                        <meshStandardMaterial color="#1A2A3A" metalness={0.5} roughness={0.1} />
-                        <pointLight position={[0, 0, 0.2]} intensity={0.5} color="#C5A059" />
+                    <mesh position={[0, 1, -0.95]} rotation={[-Math.PI / 10, 0, 0]} castShadow>
+                        <boxGeometry args={[3.1, 2.1, 0.08]} />
+                        <meshStandardMaterial color="#1A1A1A" metalness={0.9} roughness={0.1} />
+
+                        {/* Inner Screen */}
+                        <mesh position={[0, 0, 0.05]}>
+                            <planeGeometry args={[2.9, 1.9]} />
+                            <meshStandardMaterial
+                                color="#0D1C29"
+                                emissive="#C5A059"
+                                emissiveIntensity={0.05}
+                                roughness={0}
+                            />
+
+                            {/* Screen Content UI */}
+                            <Html
+                                transform
+                                scale={0.075}
+                                position={[0, 0, 0.01]}
+                                distanceFactor={5}
+                                className="pointer-events-none select-none"
+                            >
+                                {/* <div className="w-[800px] h-[500px] bg-black/90 p-12 font-mono text-[24px] text-[#C5A059]/70 overflow-hidden flex flex-col border border-[#C5A059]/20 shadow-2xl">
+                                    <div className="flex gap-4 mb-8 opacity-40">
+                                        <div className="w-4 h-4 rounded-full bg-red-400" />
+                                        <div className="w-4 h-4 rounded-full bg-yellow-400" />
+                                        <div className="w-4 h-4 rounded-full bg-green-400" />
+                                    </div>
+                                    <div className="flex-1 space-y-2">
+                                        <p className="text-blue-400 opacity-60">{"// Records initialization..."}</p>
+                                        <p><span className="text-purple-400">const</span> <span className="text-yellow-400">Archive</span> = <span className="text-white">()</span> <span className="text-purple-400">{"=>"}</span> {"{"}</p>
+                                        <p className="ml-8"><span className="text-purple-400">return</span> <span className="text-white">(</span></p>
+                                        <p className="ml-16 text-green-400">{"<Portfolio />"}</p>
+                                        <p className="ml-8 text-white">);</p>
+                                        <p>{"};"}</p>
+                                    </div>
+                                    <div className="mt-8 h-[2px] w-full bg-[#C5A059]/10 relative overflow-hidden">
+                                        <div className="absolute inset-0 bg-[#C5A059]/40 w-1/3 animate-[loading_2s_infinite_linear]"
+                                            style={{ animation: 'loading 2s infinite linear' }} />
+                                    </div>
+                                    <p className="mt-8 text-[18px] opacity-30 uppercase tracking-[0.4em]">Archival System Active</p>
+                                </div> */}
+                            </Html>
+
+                            {/* Subtle light from screen onto book/mug */}
+                            <pointLight position={[0, 0, 0.5]} intensity={0.6} color="#C5A059" distance={3} />
+                        </mesh>
                     </mesh>
                 </group>
 
@@ -83,7 +161,7 @@ const StillLifeIntroduction: React.FC<{ scrollOffset: number }> = ({ scrollOffse
                         <torusGeometry args={[0.25, 0.05, 12, 24, Math.PI]} />
                         <meshStandardMaterial color="#FCFAF5" roughness={0.2} />
                     </mesh>
-                    <Steam position={[0, 1, 0]} opacity={1 - (scrollOffset * 2)} />
+                    <Steam position={[0, 1, 0]} />
                 </group>
             </group>
 
@@ -91,14 +169,19 @@ const StillLifeIntroduction: React.FC<{ scrollOffset: number }> = ({ scrollOffse
             <group position={[5, -0.2, 0]} rotation={[0, -0.4, 0]}>
                 <mesh position={[0, 1, 0.02]} castShadow>
                     <boxGeometry args={[3, 4, 0.1]} />
-                    <meshStandardMaterial color="#1A2A3A" />
+                    <meshStandardMaterial
+                        ref={frameMaterialRef}
+                        color="#1A2A3A"
+                        transparent
+                        opacity={1}
+                    />
                 </mesh>
-                <group position={[0, 1, 0.08]}>
+                <group position={[0, 1, 0.1]}>
                     <Image
+                        ref={imageRef}
                         url="/girl.png"
                         scale={[2.8, 3.8]}
                         transparent
-                        opacity={1 - scrollOffset * 2}
                     />
                 </group>
             </group>
@@ -106,15 +189,10 @@ const StillLifeIntroduction: React.FC<{ scrollOffset: number }> = ({ scrollOffse
             {/* Name/Intro Text - Positioned above the table area */}
             <Html position={[-2.5, 1.2, 0]} center transform distanceFactor={10}>
                 <div className="w-[800px] text-center select-none pointer-events-none flex flex-col items-center">
-                    <h1 className="text-3xl font-serif text-[#0D1C29] mb-4 uppercase tracking-[0.3em] opacity-90 leading-tight"
-                        style={{ opacity: 1 - scrollOffset * 2.5, transform: `translateY(${scrollOffset * -40}px)` }}>
+                    <h1 ref={nameRef} className="text-3xl font-serif text-[#0D1C29] mb-4 uppercase tracking-[0.3em] opacity-90 leading-tight">
                         Navya Sinha
                     </h1>
-                    <div className="h-[1px] w-32 bg-[#C5A059] mb-4 opacity-40" style={{ opacity: 1 - scrollOffset * 2.5 }} />
-                    {/* <p className="text-xs font-sans text-[#1A2A3A]/60 uppercase tracking-[0.8em] font-small"
-                        style={{ opacity: 1 - scrollOffset * 3.5 }}>
-                        Crafting narratives through code & design
-                    </p> */}
+                    <div ref={lineRef} className="h-[1px] w-32 bg-[#C5A059] mb-4 opacity-40" />
                 </div>
             </Html>
         </group>
@@ -134,17 +212,17 @@ const ScrollScene: React.FC<{
         const offset = scroll.offset; // 0 to 1
 
         if (scene3DRef.current) {
-            // Workspace exit animation (tighter movement)
-            const yMove = THREE.MathUtils.lerp(0, 8, offset);
-            const zMove = THREE.MathUtils.lerp(0, -8, offset);
+            // Workspace exit animation (Gentler movement)
+            const yMove = THREE.MathUtils.lerp(0, 5, offset);
+            const zMove = THREE.MathUtils.lerp(0, -4, offset);
             scene3DRef.current.position.y = yMove;
             scene3DRef.current.position.z = zMove;
 
-            // Fades out and shrinks much faster
-            const exitScale = offset > 0.3 ? THREE.MathUtils.lerp(1, 0, (offset - 0.3) * 5) : 1;
+            // Fades out and shrinks much later (starts at 40%, gone at 70%)
+            const exitScale = offset > 0.4 ? THREE.MathUtils.lerp(1, 0, (offset - 0.4) * 3.33) : 1;
             scene3DRef.current.scale.setScalar(exitScale);
 
-            // Hide completely once it's small enough or scrolled past
+            // Hide completely only at the very bottom
             scene3DRef.current.visible = exitScale > 0.001;
         }
 
@@ -160,7 +238,7 @@ const ScrollScene: React.FC<{
     return (
         <>
             <group ref={scene3DRef} position={[0, 0, 0]}>
-                <StillLifeIntroduction scrollOffset={scroll.offset} />
+                <StillLifeIntroduction />
             </group>
 
             <group ref={shelfRef} position={[0, -12, 0]}>

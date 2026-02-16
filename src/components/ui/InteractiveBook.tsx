@@ -32,45 +32,34 @@ export const InteractiveBook: React.FC<InteractiveBookProps> = ({
 
     const totalLeaves = leafPairs.length;
 
-    // Create animation controls for each leaf
-    const controlsPool = Array.from({ length: totalLeaves }, () => useAnimationControls());
-    const bookContainerControls = useAnimationControls();
+    // Simplified animation: no more controlsPool (which violated hook rules)
+    const bookContainerAnimate = {
+        x: isBookClosed ? 0 : width / 2,
+    };
 
-    const handleClick = async () => {
-        // OPENING THE BOOK
-        if (flippedCount === 0 && isBookClosed) {
-            setIsBookClosed(false);
-            await bookContainerControls.start({
-                x: width / 2,
-                transition: { duration: 0.6, ease: "easeInOut" },
-            });
-        }
+    const handleClick = (e: React.MouseEvent) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const isLeftSide = x < rect.width / 2;
 
-        // FLIP FORWARD
-        if (flippedCount < totalLeaves) {
-            const indexToFlip = flippedCount;
-            setFlippedCount((prev) => prev + 1);
-            await controlsPool[indexToFlip].start({
-                rotateY: -180,
-                transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
-            });
-        } else {
-            // RESET / CLOSE BOOK
-            await bookContainerControls.start({
-                x: 0,
-                transition: { duration: 0.8, ease: "easeInOut" },
-            });
-
-            for (let i = totalLeaves - 1; i >= 0; i--) {
-                controlsPool[i].start({
-                    rotateY: 0,
-                    transition: { duration: 0.5, ease: "easeInOut" },
-                });
-                await new Promise((r) => setTimeout(r, 80));
+        if (isLeftSide) {
+            // FLIP BACKWARD
+            if (flippedCount > 0) {
+                setFlippedCount((prev) => prev - 1);
+                if (flippedCount === 1) {
+                    setIsBookClosed(true);
+                }
             }
-
-            setFlippedCount(0);
-            setIsBookClosed(true);
+        } else {
+            // FLIP FORWARD
+            if (flippedCount < totalLeaves) {
+                if (isBookClosed) setIsBookClosed(false);
+                setFlippedCount((prev) => prev + 1);
+            } else {
+                // Return to start
+                setFlippedCount(0);
+                setIsBookClosed(true);
+            }
         }
     };
 
@@ -107,7 +96,8 @@ export const InteractiveBook: React.FC<InteractiveBookProps> = ({
             onClick={handleClick}
         >
             <motion.div
-                animate={bookContainerControls}
+                animate={bookContainerAnimate}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
                 initial={{ x: 0 }}
                 style={{
                     width,
@@ -128,7 +118,12 @@ export const InteractiveBook: React.FC<InteractiveBookProps> = ({
                     return (
                         <motion.div
                             key={index}
-                            animate={controlsPool[index]}
+                            animate={{ rotateY: isFlipped ? -180 : 0 }}
+                            transition={{
+                                duration: 0.8,
+                                ease: [0.4, 0, 0.2, 1],
+                                delay: isFlipped ? 0 : (flippedCount - index) * 0.05 // Staggered close
+                            }}
                             initial={{ rotateY: 0 }}
                             style={{
                                 position: "absolute",

@@ -1,0 +1,155 @@
+{
+  "categories": [
+    {
+      "id": "projects",
+      "title": "Projects",
+      "color": "#1F2A36"
+    },
+    {
+      "id": "experience",
+      "title": "Experience",
+      "color": "#C9B27D"
+    },
+    {
+      "id": "skills",
+      "title": "Skills",
+      "color": "#2E3A3F"
+    },
+    {
+      "id": "about",
+      "title": "About",
+      "color": "#D6C8A4"
+    },
+    {
+      "id": "hobbies",
+      "title": "Hobbies",
+      "color": "#1F2A36"
+    },
+    {
+      "id": "contact",
+      "title": "Contact",
+      "color": "#D6C8A4"
+    }
+  ],
+  "projects": [
+    {
+      "id": "1",
+      "title": "CodeFlow:Collaborative Code Editor",
+      "description": "A next-generation collaborative code editor. Experience seamless pair programming with real-time sync, built-in terminal, and instant chat",
+      "longDescription": "Architected and Deployed a real-time collaborative code editor using Liveblocks for shared state, presence,and multi-user synchronization.Integrated MonacoEditor to deliver an IDE like in-browser coding experience with live updates.Implemented multi-language code execution using the Judge0 API, enabling secure and isolated code runs.Designed a WebSocket-driven real-time system handling 10–15 concurrent users per room with 200ms update latency, secured using JWT authentication and MongoDB-backed persistence.",
+      "image": "/image.png",
+      "technologies": [
+        "React",
+        "TypeScript",
+        "Express",
+        "WebSockets",
+        "MongoDB",
+        "Judge0",
+        "Monaco Editor"
+      ],
+      "link": "https://codeflow.navyasinha.xyz"
+    },
+    {
+      "id": "2",
+      "title": "Secondbrain",
+      "description": "Organize, store, and access your knowledge effortlessly with a system that grows with you.",
+      "longDescription": " Built features to create, organize, and share curated link collections (Brains), enabling collaborative knowledge management and smooth user experience.Developed a backend with RESTful APIs, JWT authentication and Cloudinary integration , using a modular NodeJs + Express architecture for high performance and maintainability.",
+      "image": "/image2.png",
+      "technologies": [
+        "React",
+        "TailwindCSS",
+        "Express",
+        "TypeScript",
+        "MongoDB",
+        "Cloudinary"
+      ],
+      "link": "https://brain.navyasinha.xyz"
+    },
+    {
+      "id": "3",
+      "title": "DrawByte",
+      "description": "Collaborative Draw editor.",
+      "longDescription": "• Engineered a real-time collaborative whiteboard application to facilitate virtual drawing among users.Leveraged WebSockets and Canvas API to enable seamless and real-time live updates, providing a smooth sketching experience.",
+      "image": "https://placehold.co/400x320/1A2A3A/F5F5F3?text=Project+View",
+      "technologies": [
+        "NextJs",
+        "Express",
+        "TypeScript",
+        "WebSockets",
+        "Postgres",
+        "Prisma"
+      ],
+      "link": "https://example.com"
+    }
+  ],
+  "experiences": [
+    {
+      "id": "exp1",
+      "company": "Aican Pvt Ltd",
+      "role": "Software Developer Intern",
+      "duration": "October 2025 - December 2025",
+      "description": [
+        "Worked on designing and implementing a full-stack mail integration service for Optiwise using the Nylas API.",
+        "Supports inbox/sent views, email rendering, and OAuth-based authentication for Gmail and Outlook.",
+        "Enhanced the user experience by designing guided onboarding flows with React Joyride, resulting in 60% positive feedback from new users regarding ease of use."
+      ],
+      "certificate": "/certificate.png"
+    },
+    {
+      "id": "exp2",
+      "company": "Students' Council",
+      "role": "Vice Cultural Secretary",
+      "duration": "August 2024 - June 2025",
+      "description": [
+        "Led the execution of 10+ large-scale cultural events, including fests and competitions, ensuring seamless delivery through strategic planning and team collaboration.",
+        "Was responsible for managing the cultural events including Oculus - the 3days flagship fest of our college."
+      ],
+      "certificate": "/certificate2.png"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Languages",
+      "items": [
+        "C++",
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "TypeScript",
+        "SQL"
+      ]
+    },
+    {
+      "category": "Frameworks & Libraries",
+      "items": [
+        "React",
+        "TailwindCSS",
+        "NextJs",
+        "NodeJS",
+        "Prisma",
+        "Docker"
+      ]
+    },
+    {
+      "category": "DataBase and Tools",
+      "items": [
+        "MongoDB",
+        "PostgreSQL",
+        "WebSockets",
+        "Microsoft Azure",
+        "CI/CD",
+        "Docker"
+      ]
+    }
+  ],
+  "about": "Hey, I'm Navya , Welcome to my 'About' me section where you will get to know a little more of me . Starting with, I romanticize debugging sessions, late-night builds, and that one line of code that finally works after 40 minutes of suffering.I like coding not just because its logical,but because it lets me create tiny digital worlds from scratch. Turning “what if…” into something real on a screen? Amazing feeling right! My personality is basically: 1) slightly chaotic commits. 2) tea > coffee forever !! and at least one book currently half-read. I like when code feels clear and intentional,simple, easy to read, and satisfying to build. I’m usually learning something new or working on a small project, just trying to get a little better each time.",
+  "hobbies": " 'Hobbies Section' one section which I love writing about and reading . I dont quiet have very generic hobbies but I have listed few of them here. I love reading, like actually love reading so its correct that.... the whole theme of this portfolio? very intentional. Books are my comfort and therapy. Its the closest I get to meditation, just me, my book, and zero notifications. Instant peace mode. i’m also dangerously attached to tea.I don’t “like” tea. I exist because of tea. I genuinely think I could drown in tea and be okay with it ☕ . I love walking in nature and touching the grass ,sleeping in and quiet evenings. My “me time” matters. It helps me recharge so I can create better, think clearer, and just exist peacefully.",
+  "contact": {
+    "email": "sinhanavya1875@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/navya-sinha-035562249/",
+    "github": "https://github.com/navya-sinha-dot",
+    "leetcode": "https://leetcode.com/u/navya1875/",
+    "location": "India",
+    "message": "I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions."
+  }
+}

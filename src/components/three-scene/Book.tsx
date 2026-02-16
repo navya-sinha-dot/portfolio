@@ -5,7 +5,12 @@ import { useFrame } from '@react-three/fiber';
 import { Text, Html } from '@react-three/drei';
 import * as THREE from 'three';
 import gsap from 'gsap';
-import { Project, Experience } from '@/lib/portfolioData';
+// Types for the book content can be defined locally or ignored since content is null
+interface BookContent {
+    id: string;
+    title: string;
+    description: string;
+}
 
 interface BookProps {
     title: string;

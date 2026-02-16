@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Book } from './Book';
-import { categories, projects, experiences } from '@/lib/portfolioData';
+import { categories } from '@/lib/constants';
 
 interface BookshelfProps {
     onOpenArchive?: (type: string) => void;
@@ -18,7 +18,6 @@ export const Bookshelf: React.FC<BookshelfProps> = ({
     const handleOpenBook = (id: string | null) => {
         onBookToggle(id);
         if (id && onOpenArchive) {
-            // Find category to get type
             const cat = categories.find(c => c.title === id);
             if (cat) {
                 onOpenArchive(cat.id);
@@ -40,15 +39,10 @@ export const Bookshelf: React.FC<BookshelfProps> = ({
 
             {/* Books */}
             {categories.map((cat, index) => {
-                let content = null;
-                if (cat.id === 'projects') content = projects;
-                if (cat.id === 'experience') content = experiences;
-
-                // Aggressively thin & spaced for clear "Archive" separation
-                // Thickness (X), Height (Y), Depth (Z into shelf)
-                const bookThicknesses = [0.7, 0.7, 0.8, 0.9];
-                const bookHeights = [4.2, 4.8, 3.8, 4.5];
-                const bookDepths = [2.8, 3.2, 2.5, 3.0];
+                // Formatting for each book
+                const bookThicknesses = [0.7, 0.8, 0.7, 0.9, 0.8, 0.7];
+                const bookHeights = [4.2, 4.8, 3.8, 4.5, 4.0, 4.3];
+                const bookDepths = [2.8, 3.2, 2.5, 3.0, 2.8, 2.7];
                 const spacing = 1.5;
 
                 return (
@@ -58,7 +52,7 @@ export const Bookshelf: React.FC<BookshelfProps> = ({
                         color={cat.color}
                         index={index}
                         type={cat.id as any}
-                        content={content}
+                        content={null}
                         isOpen={openBookId === cat.title}
                         onOpen={handleOpenBook}
                         width={bookThicknesses[index % bookThicknesses.length]}
