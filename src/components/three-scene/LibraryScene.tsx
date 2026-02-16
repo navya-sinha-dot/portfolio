@@ -2,7 +2,7 @@
 
 import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { PerspectiveCamera, Environment, Float, Html, Image, useScroll, ScrollControls, Scroll } from '@react-three/drei';
+import { PerspectiveCamera, Environment, Float, Html, Image, useScroll, ScrollControls, Scroll, Text } from '@react-three/drei';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bookshelf } from './Bookshelf';
 import { Bloom, EffectComposer, Vignette, Noise } from '@react-three/postprocessing';
@@ -50,8 +50,8 @@ const StillLifeIntroduction: React.FC = () => {
     const scroll = useScroll();
     const frameMaterialRef = React.useRef<THREE.MeshStandardMaterial>(null);
     const imageRef = React.useRef<any>(null);
-    const nameRef = React.useRef<HTMLHeadingElement>(null);
-    const lineRef = React.useRef<HTMLDivElement>(null);
+    const nameRef = React.useRef<any>(null);
+    const lineRef = React.useRef<THREE.Group>(null);
 
     useFrame(() => {
         const offset = scroll.offset;
@@ -61,11 +61,14 @@ const StillLifeIntroduction: React.FC = () => {
         if (frameMaterialRef.current) frameMaterialRef.current.opacity = opacity;
         if (imageRef.current) imageRef.current.material.opacity = imageOpacity;
         if (nameRef.current) {
-            nameRef.current.style.opacity = opacity.toString();
-            nameRef.current.style.transform = `translateY(${offset * -40}px)`;
+            nameRef.current.material.opacity = opacity;
+            nameRef.current.position.y = 1.2 - offset * 2;
         }
         if (lineRef.current) {
-            lineRef.current.style.opacity = opacity.toString();
+            lineRef.current.children.forEach((child: any) => {
+                if (child.material) child.material.opacity = opacity * 0.4;
+            });
+            lineRef.current.position.y = 0.8 - offset * 2;
         }
     });
 
@@ -186,15 +189,28 @@ const StillLifeIntroduction: React.FC = () => {
                 </group>
             </group>
 
-            {/* Name/Intro Text - Positioned above the table area */}
-            <Html position={[-2.5, 1.2, 0]} center transform distanceFactor={10}>
-                <div className="w-[800px] text-center select-none pointer-events-none flex flex-col items-center">
-                    <h1 ref={nameRef} className="text-3xl font-serif text-[#0D1C29] mb-4 uppercase tracking-[0.3em] opacity-90 leading-tight">
-                        Navya Sinha
-                    </h1>
-                    <div ref={lineRef} className="h-[1px] w-32 bg-[#C5A059] mb-4 opacity-40" />
-                </div>
-            </Html>
+            {/* 3D Name Text */}
+            <Text
+                ref={nameRef}
+                position={[-2.5, 1.2, 0]}
+                fontSize={0.7}
+                font="https://unpkg.com/@fontsource/playfair-display@5.1.0/files/playfair-display-latin-400-normal.woff"
+                color="#0D1C29"
+                anchorX="center"
+                anchorY="middle"
+                letterSpacing={0.2}
+            >
+                NAVYA SINHA
+                <meshStandardMaterial transparent opacity={1} />
+            </Text>
+
+            {/* Decorative Line under name */}
+            <group ref={lineRef} position={[-2.5, 0.8, 0]}>
+                <mesh>
+                    <planeGeometry args={[1.5, 0.015]} />
+                    <meshBasicMaterial color="#C5A059" transparent opacity={0.4} />
+                </mesh>
+            </group>
         </group>
     );
 };
