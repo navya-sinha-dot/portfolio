@@ -279,6 +279,16 @@ export const LibraryScene: React.FC = () => {
         setOpenBookId(null);
     };
 
+    React.useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                handleCloseArchive();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
     return (
         <div className="w-full h-screen bg-[#F5F5F3] overflow-hidden relative font-sans">
             {/* Background Texture Overlay */}

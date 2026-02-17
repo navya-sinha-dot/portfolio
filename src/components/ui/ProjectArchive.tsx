@@ -26,6 +26,18 @@ export const ProjectArchive: React.FC<ProjectArchiveProps> = ({ type, onClose })
             });
     }, []);
 
+    // Handle Escape key to close
+    React.useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape" && onClose) {
+                onClose();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [onClose]);
+
     const generatePages = () => {
         if (loading) {
             return [
