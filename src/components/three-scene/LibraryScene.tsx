@@ -92,7 +92,6 @@ const StillLifeIntroduction: React.FC = () => {
                         <boxGeometry args={[3.1, 2.1, 0.08]} />
                         <meshStandardMaterial color="#1A1A1A" metalness={0.9} roughness={0.1} />
 
-                        {/* Inner Screen */}
                         <mesh position={[0, 0, 0.05]}>
                             <planeGeometry args={[2.9, 1.9]} />
                             <meshStandardMaterial
@@ -102,43 +101,17 @@ const StillLifeIntroduction: React.FC = () => {
                                 roughness={0}
                             />
 
-                            {/* Screen Content UI */}
-                            <Html
-                                transform
-                                scale={0.075}
+                            <Image
+                                url="/vscode-screenshot.png"
+                                scale={[2.9, 1.9]}
                                 position={[0, 0, 0.01]}
-                                distanceFactor={5}
-                                className="pointer-events-none select-none"
-                            >
-                                {/* <div className="w-[800px] h-[500px] bg-black/90 p-12 font-mono text-[24px] text-[#C5A059]/70 overflow-hidden flex flex-col border border-[#C5A059]/20 shadow-2xl">
-                                    <div className="flex gap-4 mb-8 opacity-40">
-                                        <div className="w-4 h-4 rounded-full bg-red-400" />
-                                        <div className="w-4 h-4 rounded-full bg-yellow-400" />
-                                        <div className="w-4 h-4 rounded-full bg-green-400" />
-                                    </div>
-                                    <div className="flex-1 space-y-2">
-                                        <p className="text-blue-400 opacity-60">{"// Records initialization..."}</p>
-                                        <p><span className="text-purple-400">const</span> <span className="text-yellow-400">Archive</span> = <span className="text-white">()</span> <span className="text-purple-400">{"=>"}</span> {"{"}</p>
-                                        <p className="ml-8"><span className="text-purple-400">return</span> <span className="text-white">(</span></p>
-                                        <p className="ml-16 text-green-400">{"<Portfolio />"}</p>
-                                        <p className="ml-8 text-white">);</p>
-                                        <p>{"};"}</p>
-                                    </div>
-                                    <div className="mt-8 h-[2px] w-full bg-[#C5A059]/10 relative overflow-hidden">
-                                        <div className="absolute inset-0 bg-[#C5A059]/40 w-1/3 animate-[loading_2s_infinite_linear]"
-                                            style={{ animation: 'loading 2s infinite linear' }} />
-                                    </div>
-                                    <p className="mt-8 text-[18px] opacity-30 uppercase tracking-[0.4em]">Archival System Active</p>
-                                </div> */}
-                            </Html>
+                                transparent={false}
+                            />
 
-                            {/* Subtle light from screen onto book/mug */}
                             <pointLight position={[0, 0, 0.5]} intensity={0.6} color="#C5A059" distance={3} />
                         </mesh>
                     </mesh>
                 </group>
-
-                {/* Leather Bound Book */}
                 <group position={[-2.5, -1.35, 1]} rotation={[0, 0.3, 0]}>
                     <mesh castShadow position={[0, 0, 0]}>
                         <boxGeometry args={[1.5, 0.2, 2.2]} />
@@ -296,12 +269,12 @@ export const LibraryScene: React.FC = () => {
 
             {/* Real Background Image Overlay */}
             <div
-                className="absolute inset-0 z-0 bg-cover bg-center"
+                className="absolute inset-0 z-0 bg-cover bg-center blur-sm scale-105"
                 style={{ backgroundImage: "url('/bg.png')" }}
             />
 
             {/* Subtle Gradient Overlays for Depth */}
-            <div className="absolute inset-0 z-0 pointer-events-none bg-[radial-gradient(circle_at_50%_40%,rgba(255,255,255,0.3)_0%,rgba(255,255,255,0.6)_100%)]" />
+            {/* <div className="absolute inset-0 z-0 pointer-events-none bg-[radial-gradient(circle_at_50%_40%,rgba(255,255,255,0.3)_0%,rgba(255,255,255,0.6)_100%)]" /> */}
 
             {/* Top UI Elements */}
             <div className="absolute top-10 left-12 z-20 flex flex-col gap-1 pointer-events-none group">

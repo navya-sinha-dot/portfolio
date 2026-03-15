@@ -51,6 +51,20 @@
     },
     {
       "id": "2",
+      "title": "StockMaster-Inventory Management System",
+      "description": "Developed a full-stack inventory management platform using React, Node.js, Express, and MongoDB to manage products, warehouses, and stock movements with real-time tracking, role-based authentication, and automated inventory updates.",
+      "longDescription": "Built a full-stack inventory management system to digitize warehouse operations and replace manual stock tracking. The platform supports product management, incoming receipts, delivery orders, internal stock transfers, and stock adjustments, with automatic inventory updates through a centralized stock ledger. Implemented JWT-based authentication, role-based access control, and OTP password recovery for secure user management. Designed a real-time dashboard displaying key warehouse metrics such as total stock, low-inventory alerts, and pending operations. Developed a responsive frontend using React, TailwindCSS, and Framer Motion, and built RESTful APIs with Node.js, Express, and MongoDB for scalable backend operations.",
+      "image": "/image.png",
+      "technologies": [
+        "React",
+        "JavaScript",
+        "Express",
+        "MongoDB"
+      ],
+      "link": "https://stockmaster.navyasinha.xyz"
+    },
+    {
+      "id": "3",
       "title": "Secondbrain",
       "description": "Organize, store, and access your knowledge effortlessly with a system that grows with you.",
       "longDescription": " Built features to create, organize, and share curated link collections (Brains), enabling collaborative knowledge management and smooth user experience.Developed a backend with RESTful APIs, JWT authentication and Cloudinary integration , using a modular NodeJs + Express architecture for high performance and maintainability.",
@@ -66,7 +80,7 @@
       "link": "https://brain.navyasinha.xyz"
     },
     {
-      "id": "3",
+      "id": "4",
       "title": "DrawByte",
       "description": "Collaborative Draw editor.",
       "longDescription": "• Engineered a real-time collaborative whiteboard application to facilitate virtual drawing among users.Leveraged WebSockets and Canvas API to enable seamless and real-time live updates, providing a smooth sketching experience.",
