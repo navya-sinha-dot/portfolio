@@ -54,7 +54,7 @@
       "title": "StockMaster-Inventory Management System",
       "description": "Developed a full-stack inventory management platform using React, Node.js, Express, and MongoDB to manage products, warehouses, and stock movements with real-time tracking, role-based authentication, and automated inventory updates.",
       "longDescription": "Built a full-stack inventory management system to digitize warehouse operations and replace manual stock tracking. The platform supports product management, incoming receipts, delivery orders, internal stock transfers, and stock adjustments, with automatic inventory updates through a centralized stock ledger. Implemented JWT-based authentication, role-based access control, and OTP password recovery for secure user management. Designed a real-time dashboard displaying key warehouse metrics such as total stock, low-inventory alerts, and pending operations. Developed a responsive frontend using React, TailwindCSS, and Framer Motion, and built RESTful APIs with Node.js, Express, and MongoDB for scalable backend operations.",
-      "image": "/image.png",
+      "image": "/image copy.png",
       "technologies": [
         "React",
         "JavaScript",
