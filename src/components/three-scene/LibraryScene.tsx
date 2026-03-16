@@ -9,6 +9,7 @@ import { Bloom, EffectComposer, Vignette, Noise } from '@react-three/postprocess
 import { ProjectArchive } from '../ui/ProjectArchive';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { ChevronDown } from 'lucide-react';
 
 const Steam: React.FC<{ position: [number, number, number] }> = ({ position }) => {
     const group = React.useRef<THREE.Group>(null);
@@ -244,7 +245,7 @@ const ScrollScene: React.FC<{
 };
 
 export const LibraryScene: React.FC = () => {
-    const [activeArchive, setActiveArchive] = React.useState<"projects" | "experience" | "skills" | "about" | "hobbies" | "contact" | null>(null);
+    const [activeArchive, setActiveArchive] = React.useState<"projects" | "experience" | "skills" | "hobbies" | "contact" | null>(null);
     const [openBookId, setOpenBookId] = React.useState<string | null>(null);
 
     const handleCloseArchive = () => {
@@ -306,6 +307,15 @@ export const LibraryScene: React.FC = () => {
                             setActiveArchive={setActiveArchive}
                         />
                         <Environment preset="city" />
+
+                        <Scroll html>
+                            <div className="w-screen flex justify-center mt-[85vh] pointer-events-none animate-bounce">
+                                <div className="flex flex-col items-center opacity-80 backdrop-blur-sm rounded-full p-4">
+                                    <span className="text-[20px] text-[#1A2A3A] uppercase tracking-[0.3em] font-serif italic mb-1 drop-shadow-sm">Scroll Down</span>
+                                    <ChevronDown size={50} className="text-[#C5A059]" />
+                                </div>
+                            </div>
+                        </Scroll>
                     </ScrollControls>
                 </Suspense>
 

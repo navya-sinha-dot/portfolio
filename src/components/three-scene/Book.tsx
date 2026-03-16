@@ -16,7 +16,7 @@ interface BookProps {
     title: string;
     color: string;
     index: number;
-    type: 'projects' | 'experience' | 'skills' | 'about' | 'contact';
+    type: 'projects' | 'experience' | 'skills' | 'contact';
     content: any;
     onOpen: (id: string | null) => void;
     isOpen: boolean;

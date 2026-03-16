@@ -5,7 +5,7 @@ import { InteractiveBook } from "./InteractiveBook";
 import { Mail, MapPin, Linkedin, Github, ExternalLink, Code } from "lucide-react";
 
 interface ProjectArchiveProps {
-    type: "projects" | "experience" | "skills" | "about" | "hobbies" | "contact";
+    type: "projects" | "experience" | "skills" | "hobbies" | "contact";
     onClose?: () => void;
 }
 
@@ -49,7 +49,7 @@ export const ProjectArchive: React.FC<ProjectArchiveProps> = ({ type, onClose })
         }
 
         const pages: React.ReactNode[] = [];
-        const { projects = [], experiences = [], skills = [], about = "", hobbies = "" } = portfolioData || {};
+        const { projects = [], experiences = [], skills = [], hobbies = "" } = portfolioData || {};
 
         // Title / Cover Page
         pages.push(
@@ -58,7 +58,6 @@ export const ProjectArchive: React.FC<ProjectArchiveProps> = ({ type, onClose })
                     {type === "projects" && "My Work"}
                     {type === "experience" && "Career Chronology"}
                     {type === "skills" && "Technical Arsenal"}
-                    {type === "about" && "The Architect"}
                     {type === "hobbies" && "Explorations"}
                     {type === "contact" && "Get in touch"}
                 </h1>
@@ -153,23 +152,6 @@ export const ProjectArchive: React.FC<ProjectArchiveProps> = ({ type, onClose })
                     </div>
                 );
             }
-        } else if (type === "about") {
-            pages.push(
-                <div key="about-1" className="flex flex-col h-full p-10 bg-[#FCFAF5] justify-center text-center">
-                    <div className="w-24 h-24 bg-[#D1D1CB] rounded-full mx-auto mb-6 flex items-center justify-center border-4 border-white shadow-lg overflow-hidden">
-                        <img src="/girls.png" alt="Profile" className="w-full h-full object-cover" />
-                    </div>
-                    <h2 className="text-3xl font-serif text-[#1A2A3A] mb-2 uppercase tracking-tight">Navya Sinha</h2>
-                    <p className="text-[10px] text-[#C5A059] font-bold uppercase tracking-[0.4em]">Forever the girl who gets excited about learning new things</p>
-                </div>
-            );
-            pages.push(
-                <div key="about-2" className="flex flex-col h-full p-10 bg-[#FDFCF8] font-serif italic text-[#1A2A3A]/80 leading-loose">
-                    {about.split('\n').map((p: string, i: number) => (
-                        <p key={i} className="mb-6">{p}</p>
-                    ))}
-                </div>
-            );
         } else if (type === "hobbies") {
             pages.push(
                 <div key="hobbies-1" className="flex flex-col h-full p-10 bg-[#FCFAF5] justify-center text-center">
